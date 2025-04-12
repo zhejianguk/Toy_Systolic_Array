@@ -1,11 +1,11 @@
 Build the simulator:
 
 ```
-g++ matmul.cpp -O3 -o matmul
+make
 ```
 
 Run simulation:
 
 ```
-./matmul
+./main.elf
 ```
