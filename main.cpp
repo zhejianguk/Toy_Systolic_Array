@@ -4,11 +4,11 @@
 
 using namespace std;
 
-int MATRIX_A_ROWS = 2048;
-int MATRIX_A_COLS = 1024;
-int MATRIX_B_ROWS = 1024;
-int MATRIX_B_COLS = 512;
-int DIM_SIZE = 17;
+int MATRIX_A_ROWS = 256;
+int MATRIX_A_COLS = 128;
+int MATRIX_B_ROWS = 128;
+int MATRIX_B_COLS = 64;
+int DIM_SIZE = 8;
 
 int main() {
     Matrix A(MATRIX_A_ROWS, MATRIX_A_COLS);   // 3 rows, 8 columns
@@ -81,7 +81,35 @@ int main() {
         for (int j = 0; j < C.colCount(); ++j)
             if (C.get(i,j) != D.get(i,j))
                 cout << "Error!" << endl;
+    
+    // Testing WS
 
+    // for (int d1 = 0; d1 < DIM1; ++d1) {
+    //     for (int d2 = 0; d2 < DIM2; ++d2) {
+    //        for (int d3 = 0; d3 < DIM3; ++d3) {
+                int d1 = 0;
+                int d2 = 0; 
+                int d3 = 0;
+
+                // These may be smaller than DIM_SIZE if we're at the bottom/right edge
+                int subARows = std::min(DIM_SIZE, MATRIX_A_ROWS - d1 * DIM_SIZE);
+                int subACols = std::min(DIM_SIZE, MATRIX_A_COLS - d3 * DIM_SIZE);
+                int subBRows = std::min(DIM_SIZE, MATRIX_B_ROWS - d3 * DIM_SIZE);
+                int subBCols = std::min(DIM_SIZE, MATRIX_B_COLS - d2 * DIM_SIZE);
+
+                // Create sub-matrices (tiles) for A and B
+                Matrix subA(DIM_SIZE, DIM_SIZE);
+                Matrix subB(DIM_SIZE, DIM_SIZE);
+                subA.Matrix_Zeros();
+                // subB.Matrix_Zeros();
+
+                subB.print();           
+                SA.streamWeights(subB);                
+    //        }
+    //    }
+    // }
+
+    cout << "Cycles:" << SA.getCycles() << endl;
     return 0;
 }
 

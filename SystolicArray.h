@@ -11,18 +11,38 @@ using namespace std;
 
 class SystolicArray {
 private:
+    struct PE {int weight, ia, psum;};
+    struct SPM {int bandwith;};
     int DIM;
     int matmul_count;
+    PE** pe = NULL;
+    SPM  spm;
+    int  last_cycles;
+    
+
+    // Play with PEs for the Systolic Array
+    void  allocPE();
+    void  freePE();
+    void  zeroRegs();                       // clear ia / psum
 
 public:
-    // Constructor: takes dimension size
     SystolicArray(int dim);
+    ~SystolicArray();
 
-    // Getter for matmul count
+    // Print Info
     int getMatmulCount() const;
+    int getCycles() const;
+    void print_SystolicArray_W() const;
+    void print_SystolicArray_I() const;
+    void print_SystolicArray_P() const;
+    
+    void  streamWeights(const Matrix& B);   // simulate loading B (returns cycles)
+    void  runCompute(const Matrix& A);      // feed A & MAC (adds cycles)
+    void  verifyDim(const Matrix&, const Matrix&) const;
 
     // Perform matrix multiplication
     Matrix matmul(const Matrix& A, const Matrix& B);
+    Matrix matmulWeightStationary(const Matrix& A, const Matrix& B);
 };
 
 #endif // SYSTOLICARRAY_H
