@@ -36,8 +36,8 @@ public:
     void print_SystolicArray_I() const;
     void print_SystolicArray_P() const;
     
-    void  streamWeights(const Matrix& B);   // simulate loading B (returns cycles)
-    void  runCompute(const Matrix& A);      // feed A & MAC (adds cycles)
+    void  PreloadWeights(const Matrix& B);   // simulate loading B (returns cycles)
+    Matrix runCompute(const Matrix& A);      // feed A & MAC (adds cycles)
     void  verifyDim(const Matrix&, const Matrix&) const;
 
     // Perform matrix multiplication
