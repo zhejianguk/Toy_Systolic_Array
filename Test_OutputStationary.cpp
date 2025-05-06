@@ -48,9 +48,8 @@ int main() {
                     for (int j = 0; j < subBCols; ++j) 
                         subB.set(i, j, B.get(d3 * DIM_SIZE + i, d2 * DIM_SIZE + j));
 
-                /*** Weight Stationary ****/
-                SA.preLoadWeights(subB);    // Load weights
-                Matrix subC = SA.runCompute(subA);  // Stream IAs 
+                /*** Output Stationary ****/
+                Matrix subC = SA.runOutputStationary(subA, subB);
                 Matrix subD = SA.matmul(subA, subB); // Reference Results
 
                 for (int i = 0; i < DIM_SIZE; ++i) 
@@ -81,7 +80,7 @@ int main() {
             if (C.get(i,j) != D.get(i,j))
                 cout << "Error!" << endl;
 
-    cout << "WS Tested, Cycles:" << SA.getCycles() << endl;
+    cout << "OS Tested, Cycles:" << SA.getCycles() << endl;
     return 0;
 }
 

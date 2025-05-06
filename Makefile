@@ -8,7 +8,7 @@ COMMON_SRC := Matrix.cpp SystolicArray.cpp
 COMMON_OBJ := $(COMMON_SRC:.cpp=.o)
 
 # One .cpp file per test executable (e.g. Test_MatMual.cpp …)
-TESTS      := Test_MatMul Test_WeightSationary
+TESTS      := Test_MatMul Test_WeightSationary Test_OutputStationary
 TEST_OBJS  := $(TESTS:%=%.o)          # produces Test_MatMual.o Test_WeightSationary.o
 TARGETS    := $(TESTS)                # final executables
 

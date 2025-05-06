@@ -77,7 +77,7 @@ void SystolicArray::print_SystolicArray_P() const{
 }
 
 // Loading Weights
-void SystolicArray::PreloadWeights(const Matrix& B) {
+void SystolicArray::preLoadWeights(const Matrix& B) {
     for (int i = 0; i < DIM; ++i) {
         for (int j = 0; j < DIM; ++j)
             pe[i][j].weight = B.get(i, j);
@@ -102,7 +102,7 @@ Matrix SystolicArray::runCompute(const Matrix& A) {
                             pe[i][j-1].ia;
                 // MAC
                 pe[i][j].ia = a_in;
-                pe[i][j].psum = a_in * pe[i][j].weight;
+                pe[i][j].psum = pe[i][j].ia * pe[i][j].weight;
             }
         }
         // print_SystolicArray_I();
@@ -131,16 +131,86 @@ Matrix SystolicArray::runCompute(const Matrix& A) {
     return C;
 }
 
+Matrix SystolicArray::runOutputStationary(const Matrix& A, const Matrix& B) {
+    const int MOV = 3*DIM - 1;
+    const int DIM_ = 2*DIM - 1;
+
+    Matrix C(DIM, DIM);
+    C.Matrix_Zeros();
+
+    // TODO: BEFORE EACH COMPUTE, PSUM SHOULD be reset
+
+    // Transpose A and B to the form which is ready to be moved to SAs
+    Matrix A_(DIM, DIM_);
+    Matrix B_(DIM_, DIM);
+    A_.Matrix_Zeros();
+    B_.Matrix_Zeros();
+    
+    /* In RTL, the above procedures is implemented using delay registers
+       The consumed cycles has been calcuated in this 2*DIM - 1 */
+    for (int i = 0; i < DIM; ++i) {
+        for (int j = 0; j < DIM_; ++j) {
+            int d = ((j >= i) && (j < DIM + i)) ? A.get(i,j-i) : 0;
+            A_.set(i, j, d);
+        }
+    }
+
+    for (int i = 0; i < DIM_; ++i) {
+        for (int j = 0; j < DIM; ++j) {
+            int d = ((i >= j) && (i < DIM + j)) ? B.get(i - j, j) : 0;
+            B_.set(i, j, d);
+        }
+    }
+
+    for (int m = 0; m < MOV; ++m) {
+    // Each Move Takes one cycle
+
+        for (int i = 0; i < DIM; ++i){
+        // Update Weights
+            for (int j = DIM - 1; j >= 0; j--){
+                // incoming A
+                int a_in = (j == 0) ? ((m <= DIM_-1) ? A_.get(i,m) : 0):
+                                       pe[i][j-1].ia;
+                pe[i][j].ia = a_in;
+            }
+        }
+
+        for (int j = 0; j < DIM; ++j){
+        // Update IAs
+            for (int i = DIM - 1; i >= 0; i--){
+                int b_in = (i == 0) ? ((m <= DIM_-1) ? B_.get(m,j) : 0):
+                                       pe[i-1][j].weight;
+                pe[i][j].weight = b_in;
+                // Updated PSUM (another loop is not required)
+                pe[i][j].psum = pe[i][j].psum + pe[i][j].ia * pe[i][j].weight;
+            }
+        }
+        last_cycles = last_cycles + 1;
+    }
+
+    for (int i = 0; i < DIM; ++ i){
+        for (int j = 0; j < DIM; ++j){
+            C.set(i , j, pe[i][j].psum);
+        }
+    }
+    
+    for (int i = 0; i < DIM; ++i){
+        for (int j = 0; j < DIM; ++j){
+            // Reset PEs
+            pe[i][j].weight = 0;
+            pe[i][j].ia = 0;
+            pe[i][j].psum = 0;
+        }
+    }
+
+    return C;
+}
 
 Matrix SystolicArray::matmul(const Matrix& A, const Matrix& B) {
-    // Verify if the sizes of Matrixs and Systolic Arrary 
     verifyDim(A,B);
 
-    // Multiply using your existing friend function
     Matrix C = Matmul(A, B);
 
-    // Increment computation count
     ++matmul_count;
-
     return C;
 }
