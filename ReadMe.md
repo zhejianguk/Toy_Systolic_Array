@@ -14,4 +14,5 @@ The ${TEST_NAME} can be configured as:
 ```
 1. MatMul
 2. WeightStationary
+3. OutputStationary
 ```
