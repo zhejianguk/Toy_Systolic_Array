@@ -10,9 +10,7 @@ ninja
 Run simulation:
 
 ```
-./build/src/tests/Test_MatMul
-./build/src/tests/Test_WeightSationary
-./build/src/tests/Test_OutputStationary
+./build/src/tests/Test_${TEST_NAME}
 ```
 
 The ${TEST_NAME} can be configured as:

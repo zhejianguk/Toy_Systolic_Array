@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Top.h"
-#include "Matrix.h"
-#include "SystolicArray.h"
+#include "compute/Matrix.h"
+#include "compute/SystolicArray.h"
 
 using namespace std;
 

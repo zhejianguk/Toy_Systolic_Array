@@ -1,4 +1,4 @@
-#include "Matrix.h"
+#include "compute/Matrix.h"
 
 Matrix::Matrix(int r, int c) : rows(r), cols(c) {
     data = new int*[rows];
