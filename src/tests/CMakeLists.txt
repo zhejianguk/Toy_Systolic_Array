@@ -2,6 +2,7 @@ set(TEST_TARGETS
     Test_MatMul
     Test_WeightSationary
     Test_OutputStationary
+    Test_RowStationary
 )
 
 foreach(TEST ${TEST_TARGETS})
