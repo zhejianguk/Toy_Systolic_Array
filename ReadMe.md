@@ -1,13 +1,18 @@
 Build the simulator:
 
 ```
-make
+mkdir build
+cd build
+cmake -G Ninja ..
+ninja
 ```
 
 Run simulation:
 
 ```
-./Text_${TEST_NAME}
+./build/src/tests/Test_MatMul
+./build/src/tests/Test_WeightSationary
+./build/src/tests/Test_OutputStationary
 ```
 
 The ${TEST_NAME} can be configured as:
