@@ -1,4 +1,4 @@
-#include "compute/Matrix.h"
+#include "compute/SystolicArray/Matrix.h"
 
 Matrix::Matrix(int r, int c) : rows(r), cols(c) {
     data = new int*[rows];

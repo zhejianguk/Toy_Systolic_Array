@@ -1,10 +1,9 @@
-# Create computation model library
-add_library(computation_model
-    Matrix.cpp
-    SystolicArray.cpp
-)
+add_library(compute-model INTERFACE)
 
-# Set include directories
-target_include_directories(computation_model PUBLIC
-    ${CMAKE_SOURCE_DIR}/include
-) 
+add_subdirectory(SystolicArray)
+add_subdirectory(VectorUnit)
+
+target_link_libraries(compute-model INTERFACE 
+  systolic_array 
+  vector_unit
+  )

@@ -1,5 +1,5 @@
 #include "Top.h"
-#include "compute/SystolicArray.h"
+#include "compute/SystolicArray/SystolicArray.h"
 using namespace std;
 
 SystolicArray::SystolicArray(int dim)
