@@ -20,4 +20,5 @@ The ${TEST_NAME} can be configured as:
 3. OutputStationary
 4. RowStationary
 5. MetaVector
+6. VectorWarp
 ```

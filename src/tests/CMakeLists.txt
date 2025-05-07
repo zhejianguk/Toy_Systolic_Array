@@ -4,6 +4,7 @@ set(TEST_TARGETS
     Test_OutputStationary
     Test_RowStationary
     Test_MetaVector
+    Test_VectorWarp
 )
 
 foreach(TEST ${TEST_TARGETS})

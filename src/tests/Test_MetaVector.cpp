@@ -12,50 +12,50 @@ void test_constructor() {
 }
 
 void test_initialization() {
-    cout << "\nTesting vector initialization..." << endl;
+    cout << "\nTesting initialization..." << endl;
     MetaVector mv(4);
     int* v1 = mv.getVector1();
     int* v2 = mv.getVector2();
     
-    // Test vector1 (should be 1,2,3,4)
     for (int i = 0; i < 4; i++) {
         assert(v1[i] == i + 1);
-    }
-    
-    // Test vector2 (should be 4,3,2,1)
-    for (int i = 0; i < 4; i++) {
         assert(v2[i] == 4 - i);
     }
     cout << "Initialization test passed!" << endl;
 }
 
-void test_set_vectors() {
-    cout << "\nTesting set vectors..." << endl;
+void test_selfMul() {
+    cout << "\nTesting selfMul..." << endl;
     MetaVector mv(4);
     
-    // Create test arrays
-    int test_v1[] = {10, 20, 30, 40};
-    int test_v2[] = {40, 30, 20, 10};
+    int* result = mv.selfMul(1);
+    assert(result[0] == 2 * 4);
+    assert(result[1] == 2 * 3);
+    assert(result[2] == 2 * 2);
+    assert(result[3] == 2 * 1);
     
-    // Set vectors
-    mv.setVector1(test_v1);
-    mv.setVector2(test_v2);
+    delete[] result;
+    cout << "selfMul test passed!" << endl;
+}
+
+void test_selfAdd() {
+    cout << "\nTesting selfAdd..." << endl;
+    MetaVector mv(4);
     
-    // Verify vectors
-    int* v1 = mv.getVector1();
-    int* v2 = mv.getVector2();
+    int* result = mv.selfAdd();
+    assert(result[0] == 1 + 4);
+    assert(result[1] == 2 + 3);
+    assert(result[2] == 3 + 2);
+    assert(result[3] == 4 + 1);
     
-    for (int i = 0; i < 4; i++) {
-        assert(v1[i] == test_v1[i]);
-        assert(v2[i] == test_v2[i]);
-    }
-    cout << "Set vectors test passed!" << endl;
+    delete[] result;
+    cout << "selfAdd test passed!" << endl;
 }
 
 void test_print() {
     cout << "\nTesting print function..." << endl;
     MetaVector mv(3);
-    cout << "Printing vectors:" << endl;
+    cout << "Printing MetaVector:" << endl;
     mv.print();
     cout << "Print test completed!" << endl;
 }
@@ -66,7 +66,8 @@ int main() {
     try {
         test_constructor();
         test_initialization();
-        test_set_vectors();
+        test_selfMul();
+        test_selfAdd();
         test_print();
         
         cout << "\nAll tests passed successfully!" << endl;
@@ -76,4 +77,4 @@ int main() {
     }
     
     return 0;
-}
+} 

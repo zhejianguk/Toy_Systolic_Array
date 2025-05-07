@@ -49,3 +49,20 @@ void MetaVector::print() const {
     }
     cout << endl;
 }
+
+int* MetaVector::selfMul(int idx) const {
+    int* output = new int[lane];
+    for (int i = 0; i < lane; ++i) {
+        output[i] = vector1[idx] * vector2[i];
+    }
+    return output;
+}
+
+int* MetaVector::selfAdd() const {
+    int* output = new int[lane];
+    for (int i = 0; i < lane; ++i) {
+        output[i] = vector1[i] + vector2[i];
+    }
+    return output;
+}
+

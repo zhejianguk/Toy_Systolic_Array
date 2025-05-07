@@ -29,6 +29,9 @@ public:
     void print() const;
     
     int getLane() const { return lane; }
+    
+    int* selfMul(int idx) const;
+    int* selfAdd() const;
 };
 
 #endif // META_VECTOR_H
